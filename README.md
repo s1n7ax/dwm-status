@@ -53,3 +53,20 @@ alt + Escape
 XF86Audio{Raise,Lower}Volume
     pactl set-sink-volume @DEFAULT_SINK@ {+10%,-10%} && kill -SIGUSR1 $(pgrep dwm_status.py)
 ```
+
+## Running
+
+make sure you got the permissions to execute
+```bash
+chmod -R u+x dwm-status/*
+```
+
+run `dwm_status.py` in a start up script (.xinirc)
+#### .xinitrc
+```
+<path to dir>/dwm_status.py &
+```
+
+## Screenshots
+
+![screenshot](./screenshots/screen.png)
