@@ -24,7 +24,7 @@ class Memory:
     @trigger_change_event
     def set_details(self):
         self.resources = self.get_details()
-        threading.Timer(5 * 60, self.set_details).start()
+        threading.Timer(5, self.set_details).start()
 
     def __str__(self):
         return self.resources
