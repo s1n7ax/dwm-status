@@ -23,7 +23,7 @@ class Weather:
     @trigger_change_event
     def set_details(self):
         self.weather = self.get_details()
-        return threading.Timer(1 * 60 * 60, self.set_details).start()
+        return threading.Timer(60 * 60, self.set_details).start()
 
     def __str__(self):
         return self.weather
