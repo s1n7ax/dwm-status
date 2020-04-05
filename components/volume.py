@@ -6,9 +6,9 @@ import threading
 
 class Volume:
     def __init__(self):
-        self.setDetails()
+        self.set_details()
 
-    def getDetails(self):
+    def get_details(self):
         volume = execute([
             ["amixer", "sget", "Master"],
             ["tail", "-n1"],
@@ -18,8 +18,8 @@ class Volume:
 
     @on_signal
     @trigger_change_event
-    def setDetails(self):
-        self.resources = self.getDetails()
+    def set_details(self):
+        self.resources = self.get_details()
 
     def __str__(self):
         return self.resources

@@ -7,10 +7,10 @@ class Weather:
     def __init__(self, location):
         self.url = 'http://wttr.in/{}?format=1'.format(location)
         self.weather= 'loading'
-        t1 = threading.Thread(target=self.setDetails, args=[])
+        t1 = threading.Thread(target=self.set_details, args=[])
         t1.start()
 
-    def getDetails(self):
+    def get_details(self):
         try:
             return urllib.request.urlopen(self.url).read().decode('utf-8')
         except:
@@ -18,9 +18,9 @@ class Weather:
 
 
     @trigger_change_event
-    def setDetails(self):
-        self.weather = self.getDetails()
-        return threading.Timer(1 * 60 * 60, self.setDetails).start()
+    def set_details(self):
+        self.weather = self.get_details()
+        return threading.Timer(1 * 60 * 60, self.set_details).start()
 
     def __str__(self):
         return self.weather

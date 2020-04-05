@@ -6,9 +6,9 @@ import threading
 
 class CPU:
     def __init__(self):
-        self.setDetails()
+        self.set_details()
 
-    def getDetails(self):
+    def get_details(self):
         cpu = execute([
             ["sensors"],
             ["grep", "^Core.*"],
@@ -18,9 +18,9 @@ class CPU:
         return "CPU {:.2f}%".format(float(cpu))
 
     @trigger_change_event
-    def setDetails(self):
-        self.resources = self.getDetails()
-        threading.Timer(2 * 60, self.setDetails).start()
+    def set_details(self):
+        self.resources = self.get_details()
+        threading.Timer(2 * 60, self.set_details).start()
 
     def __str__(self):
         return self.resources
