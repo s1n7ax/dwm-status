@@ -3,6 +3,7 @@ import time
 import subprocess
 import signal
 from dwm_status_events import add_changed_event_listener, on_signal_callbacks
+from threading import Thread
 from components.weather import Weather
 from components.cpu import CPU
 from components.memory import Memory
@@ -53,9 +54,7 @@ def on_change():
 
 def on_signal(_x, _y):
     for callback in on_signal_callbacks:
-        print('on signal before')
-        callback()
-        print('on signal after')
+        Thread(callback())
 
 
 '''

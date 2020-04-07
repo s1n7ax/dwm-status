@@ -1,12 +1,14 @@
 #!/bin/python
+
 from subprocess import Popen,PIPE
 from dwm_status_events import trigger_change_event
 from shell_exe import execute
-import threading
+from threading import Timer, Thread
 
 class CPU:
     def __init__(self):
-        self.set_details()
+        self.details = 'CPU 00.00%'
+        Thread(self.set_details()).start()
 
     def get_details(self):
         cpu = execute([
@@ -19,11 +21,8 @@ class CPU:
 
     @trigger_change_event
     def set_details(self):
-        self.resources = self.get_details()
-        threading.Timer(2, self.set_details).start()
+        self.details = self.get_details()
+        Timer(2, self.set_details).start()
 
     def __str__(self):
-        return self.resources
-
-
-
+        return self.details

@@ -1,12 +1,14 @@
 #!/bin/python
+
 from subprocess import Popen,PIPE
 from dwm_status_events import trigger_change_event
 from shell_exe import execute
-import threading
+from threading import Timer, Thread
 
 class Memory:
     def __init__(self):
-        self.set_details()
+        self.details = '💻 MEM 0.00Gi/0.00Gi'
+        Thread(self.set_details()).start()
 
     def get_details(self):
         mem_used = execute([
@@ -23,11 +25,8 @@ class Memory:
 
     @trigger_change_event
     def set_details(self):
-        self.resources = self.get_details()
-        threading.Timer(5, self.set_details).start()
+        self.details = self.get_details()
+        Timer(5, self.set_details).start()
 
     def __str__(self):
-        return self.resources
-
-
-
+        return self.details
