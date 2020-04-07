@@ -1,13 +1,15 @@
 #!/bin/python
+import time
+import subprocess
+import signal
 from dwm_status_events import add_changed_event_listener, on_signal_callbacks
 from components.weather import Weather
 from components.cpu import CPU
 from components.memory import Memory
 from components.storage import Storage 
 from components.volume import Volume 
-import time
-import subprocess
-import signal
+from components.datetime import DateTime 
+from components.wifi import Wifi 
 
 
 #------------------------------------------------------------------------------#
@@ -18,13 +20,15 @@ status_list = [
     CPU(),
     Memory(),
     Storage(),
-    Volume()
+    DateTime(),
+    Volume(),
+    Wifi(), #WIP
 ]
 
 sep = ' | '
 
 '''
-update the status bar
+updates the status bar
 '''
 def update_status():
     name = ''
@@ -36,6 +40,8 @@ def update_status():
 
         name = name + sep + str(stat)
 
+    name = name + sep
+
     subprocess.run(["xsetroot", "-name", name])
 
 
@@ -45,14 +51,22 @@ on value change callback function
 def on_change():
     update_status()
 
+def on_signal(_x, _y):
+    for callback in on_signal_callbacks:
+        print('on signal before')
+        callback()
+        print('on signal after')
+
+
 '''
 main
 '''
 def __main__():
+    # register on change 
     add_changed_event_listener(on_change)
 
-    for callback in on_signal_callbacks:
-        signal.signal(signal.SIGUSR1, lambda x, y: (callback()))
+    # register on signal
+    signal.signal(signal.SIGUSR1, on_signal)
 
     # setting init status
     update_status()
