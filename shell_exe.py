@@ -4,7 +4,7 @@ def execute(arr):
     process = None
 
     if len(arr) == 1:
-        return check_output(arr).decode('urf-8')
+        return check_output(arr[0]).decode('utf-8')
 
 
     for index, command in enumerate(arr):
