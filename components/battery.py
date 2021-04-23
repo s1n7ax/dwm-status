@@ -12,8 +12,8 @@ class Battery:
         Thread(self.set_details()).start()
 
     def get_details(self):
-        cpu = subprocess.check_output("cat /sys/class/power_supply/BAT0/capacity",shell=True)
-        return "BAT "+str(float(cpu))+"%"
+        bat = subprocess.check_output("cat /sys/class/power_supply/BAT0/capacity",shell=True)
+        return "BAT "+str(float(bat))+"%"
 
     @trigger_change_event
     def set_details(self):
